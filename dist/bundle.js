@@ -16,7 +16,7 @@
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var chart_js_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js/auto */ \"./node_modules/chart.js/auto/auto.js\");\n\nvar ctx = document.getElementById(\"myChart\");\nvar dta = [\n    { year: 2010, count: 10 },\n    { year: 2011, count: 20 },\n    { year: 2012, count: 15 },\n    { year: 2013, count: 25 },\n    { year: 2014, count: 22 },\n    { year: 2015, count: 30 },\n    { year: 2016, count: 28 },\n];\nvar myChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_0__.Chart(ctx, {\n    type: \"bar\",\n    data: {\n        labels: dta.map(function (d) { return d.year; }),\n        datasets: [\n            {\n                data: dta.map(function (d) { return d.count; }),\n                label: \"Count by year\",\n            },\n        ],\n    },\n});\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (myChart);\n\n\n//# sourceURL=webpack://promineo-week-9/./src/chart_app.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"createMyChart\": () => (/* binding */ createMyChart)\n/* harmony export */ });\n/* harmony import */ var chart_js_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js/auto */ \"./node_modules/chart.js/auto/auto.js\");\n\nvar createMyChart = function (ctx, dta) { return new chart_js_auto__WEBPACK_IMPORTED_MODULE_0__.Chart(ctx, {\n    type: \"bar\",\n    data: {\n        labels: dta.map(function (d) { return d.year; }),\n        datasets: [\n            {\n                data: dta.map(function (d) { return d.count; }),\n                label: \"Count by year\",\n            },\n        ],\n    },\n}); };\n\n\n//# sourceURL=webpack://promineo-week-9/./src/chart_app.ts?");
 
 /***/ }),
 
@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _chart_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chart_app */ \"./src/chart_app.ts\");\n\nconsole.log(_chart_app__WEBPACK_IMPORTED_MODULE_0__[\"default\"]);\n\n\n//# sourceURL=webpack://promineo-week-9/./src/index.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _chart_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chart_app */ \"./src/chart_app.ts\");\n\nvar ctx = document.getElementById(\"myChart\");\nvar dta = [\n    { year: 2010, count: 10 },\n    { year: 2011, count: 20 },\n    { year: 2012, count: 15 },\n    { year: 2013, count: 25 },\n    { year: 2014, count: 22 },\n    { year: 2015, count: 30 },\n    { year: 2016, count: 28 },\n];\n(0,_chart_app__WEBPACK_IMPORTED_MODULE_0__.createMyChart)(ctx, dta);\n\n\n//# sourceURL=webpack://promineo-week-9/./src/index.ts?");
 
 /***/ }),
 
