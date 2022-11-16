@@ -13,6 +13,7 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous" />
     <link rel="stylesheet" href="./styles/prism.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
     <header>
@@ -44,12 +45,12 @@
         </div>
       </nav>
     </header>
-    <main>
+    <main class="container pt-4 pb-10">
       <div class="accordion" id="accordionExample">
         <div class="accordion-item">
           <h2 class="accordion-header" id="headingOne">
             <button
-              class="accordion-button"
+              class="accordion-button collapsed"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseOne"
@@ -60,9 +61,8 @@
           </h2>
           <div
             id="collapseOne"
-            class="accordion-collapse collapse show"
-            aria-labelledby="headingOne"
-            data-bs-parent="#accordionExample">
+            class="accordion-collapse collapse"
+            aria-labelledby="headingOne">
             <div class="accordion-body">
               <p class="mb-2">It was pretty simple actually.</p>
               <p class="mb-2">
@@ -82,7 +82,8 @@
               <p class="mb-2">
                 I used the following code to calculate the monthly payment:
               </p>
-              <pre class="rounded"><code class="language-typescript">const TOTAL_NUMBER_OF_MONTHS = Number(data.loanTerm) * 12;
+              <pre
+                class="rounded"><code class="language-typescript">const TOTAL_NUMBER_OF_MONTHS = Number(data.loanTerm) * 12;
 const MONTHLY_INTEREST_RATE = Number(data.interestRate) / 100 / 12;
 const MONTHLY_PAYMENT = PRINCIPAL * (MONTHLY_INTEREST_RATE * (1 + MONTHLY_INTEREST_RATE) ** TOTAL_NUMBER_OF_MONTHS) / ((1 + MONTHLY_INTEREST_RATE) ** TOTAL_NUMBER_OF_MONTHS - 1);
 
@@ -99,7 +100,7 @@ const MONTHLY_PAYMENT = PRINCIPAL * (MONTHLY_INTEREST_RATE * (1 + MONTHLY_INTERE
               data-bs-target="#collapseTwo"
               aria-expanded="false"
               aria-controls="collapseTwo">
-              Accordion Item #2
+              How did I place all that data in the graph?
             </button>
           </h2>
           <div
@@ -108,14 +109,117 @@ const MONTHLY_PAYMENT = PRINCIPAL * (MONTHLY_INTEREST_RATE * (1 + MONTHLY_INTERE
             aria-labelledby="headingTwo"
             data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <strong>This is the second item's accordion body.</strong> It is
-              hidden by default, until the collapse plugin adds the appropriate
-              classes that we use to style each element. These classes control
-              the overall appearance, as well as the showing and hiding via CSS
-              transitions. You can modify any of this with custom CSS or
-              overriding our default variables. It's also worth noting that just
-              about any HTML can go within the <code>.accordion-body</code>,
-              though the transition does limit overflow.
+              <p class="mb-2">Well actually that was fairly simple!</p>
+              <p class="mb-2">
+                All I had to do was use a javascript library called
+                <a href="https://www.chartjs.org/" target="_blank" class=""
+                  >ChartJS</a
+                >
+              </p>
+              <p class="mb-2">
+                That library provides a utility for using a canvas element on
+                the page to display a chart!
+              </p>
+              <p class="mb-2">
+                Then it was just a matter of calculating the principal paid and
+                interest paid over the months, reducing that down to a useful
+                number of data points, and sending it to the constructor for the
+                Chart Element.
+              </p>
+              <p class="mb-2">I used the following code to create the graph:</p>
+              <pre
+                class="rounded"><code class="language-typescript">export const createMyChart = (ctx: HTMLCanvasElement, dta: ChartData[], loanTerm:number ) =>{
+  if(Chart.getChart(ctx)){
+    Chart.getChart(ctx).destroy();
+  }
+return new Chart(ctx, {
+  type: "line",
+
+  data: {
+    labels: dta.map((d) => d.year),
+
+    datasets: [
+      {
+        label: "Remaining Balance",
+        data: dta.map((d) => d.remainingPrincipal),
+        borderColor: "#0d6efd",
+        backgroundColor:"#0d6efd",
+        type: "line",
+        order: 0,
+      },
+      {
+        label: "Principal",
+        data: dta.map((d) => d.monthlyPrincipal),
+        borderColor: "#074297",
+        backgroundColor: "#074297",
+        type: "bar",
+        yAxisID: "payments",
+      },
+      {
+        label: "Interest",
+        data: dta.map((d) => d.interest),
+        backgroundColor: "#03214b",
+        borderColor: "#03214b",
+        type: "bar",
+        yAxisID: "payments",
+      },
+    ],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    scales: {
+      x: {
+        stacked: true,
+        title: {
+          display: true,
+          text: "Year",
+        },
+        ticks: {
+          stepSize: loanTerm,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        stacked: false,
+        title: {
+          display: true,
+          text: "Balance",
+        },
+      },
+      payments: {
+        min: 0,
+        stacked: true,
+        beginAtZero: true,
+        position: "right",
+        grid: {
+          drawOnChartArea: false,
+        },
+        title: {
+          display: true,
+          text: "Monthly Payments",
+        },
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Mortgage Over Years",
+      },
+      
+    },
+    interaction:{
+      mode: 'index',
+    }
+  },
+});
+}</code></pre>
+              <p class="mt-2">
+                This is basically a function that takes in the canvas element
+                from the page, checks to see if there's already a graph, and, if
+                there is, destroy it and recreate the new graph with the data
+                that's been passed in.
+              </p>
             </div>
           </div>
         </div>
@@ -128,7 +232,7 @@ const MONTHLY_PAYMENT = PRINCIPAL * (MONTHLY_INTEREST_RATE * (1 + MONTHLY_INTERE
               data-bs-target="#collapseThree"
               aria-expanded="false"
               aria-controls="collapseThree">
-              Accordion Item #3
+              What tests did I run?
             </button>
           </h2>
           <div
@@ -137,23 +241,48 @@ const MONTHLY_PAYMENT = PRINCIPAL * (MONTHLY_INTEREST_RATE * (1 + MONTHLY_INTERE
             aria-labelledby="headingThree"
             data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <strong>This is the third item's accordion body.</strong> It is
-              hidden by default, until the collapse plugin adds the appropriate
-              classes that we use to style each element. These classes control
-              the overall appearance, as well as the showing and hiding via CSS
-              transitions. You can modify any of this with custom CSS or
-              overriding our default variables. It's also worth noting that just
-              about any HTML can go within the <code>.accordion-body</code>,
-              though the transition does limit overflow.
+              <p class="mb-2">
+                Well that's the tricky part really. I'm really working on trying
+                to figure out "what makes a good test", but for now I wanted to
+                test a function I used to reduce the size of a dataset to a
+                useful number of data points. I used the following code to test
+                it:
+              </p>
+              <pre
+                class="rounded"><code class="language-typescript">const {describe, expect, it} = require("@jest/globals");
+const {everyNthElement} = require("../src/utilities");
+describe("everyNthElement", () => {
+    it("should return every nth element", () => {
+        const array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        const result = everyNthElement(array, 3);
+        expect(result).toEqual([1, 4, 7]);
+    });
+    it('should return the first element if n is 1', () => {
+        const array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        const result = everyNthElement(array, 1);
+        expect(result).toEqual([1]);
+    });
+});</code></pre>
+              <p class="mt-2 mb-2">
+                I guess admittedly I ran another test but that was just for the
+                configuration of jest! Here's that code
+              </p>
+              <pre class="rounded"><code class="language-typescript">
+const {describe, expect, test} = require("@jest/globals")
+
+
+ 
+const mySum = (a, b)=> a + b;
+
+describe("mySum", () => {
+    test("should return the sum of two numbers", () => {
+        expect(mySum(1, 2)).toBe(3);
+    });
+});</code></pre>
             </div>
           </div>
         </div>
       </div>
-      <pre>
-        <code class="language-typescript" >
-          console.log('this is my code');
-        </code>
-    </pre>
     </main>
     <footer class="bg-dark py-4 fixed-bottom">
       <div class="row container mx-auto">
