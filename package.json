@@ -12,8 +12,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.2",
-    "chart.js": "^4.0.1",
-    "prismjs": "^1.29.0"
+    "chart.js": "^4.0.1"
   },
   "name": "promineo-week-9",
   "version": "1.0.0",
