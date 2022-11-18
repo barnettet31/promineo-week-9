@@ -7,13 +7,7 @@ const ctx = document.getElementById("myChart") as HTMLCanvasElement;
 const myMortgageForm = document.getElementById(
   "mortgageForm"
 ) as HTMLFormElement;
-interface MortgageData {
-  loanAmount: number;
-  downPayment: number;
-  loanTerm: number;
-  startYear: number;
-  interestRate: number;
-}
+
 const setLoanData = function (
   monthly: number,
   total: number,
