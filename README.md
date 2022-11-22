@@ -1,6 +1,6 @@
 # Promineo Week  Homework
 
-This is my homework for week  of the Promineo Front End Development Bootcamp. 
+This is my homework for week 9 of the Promineo Front End Development Bootcamp. 
 
 ## Table of contents
 
